@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct StatsApp: App {
+    
+    @ObservedObject private var storage = RepoStorage()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(repos: $storage.repos,
+                        saveAction: { storage.add($0)},
+                        removeAction: { storage.remove($0) }
+            )
+            .frame(minWidth: 700, minHeight: 300)
+            .onAppear { storage.load() }
         }
+        .commands { SidebarCommands() }
     }
 }
