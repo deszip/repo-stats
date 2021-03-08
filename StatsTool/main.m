@@ -110,12 +110,17 @@ int main(int argc, const char * argv[]) {
         // Write stats
         for (NSUInteger i = 0; i < depth; i++) {
             NSLog(@"Getitng stats for commit %lu", depth - i);
-            
             NSDate *startDate = [NSDate date];
 
+            // Write stats for current revision
             writeStats(workingDirectoryPath);
-            goBack(workingDirectoryPath);
             
+            // If it's not the last commit, go one commit back
+            if (i < depth - 1) {
+                goBack(workingDirectoryPath);
+            }
+            
+            // Calculate stats
             NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startDate];
             totalStepTime += elapsed;
             averageStepTime = totalStepTime / (i + 1);
