@@ -7,10 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
-void cloneRepo(NSString *repoPath, NSString *workingDirectoryPath) {
+
+/// git clone --single-branch --branch [branch_name] [repo_url]
+void cloneRepo(NSString *repoPath, NSString *workingDirectoryPath, NSString *branch) {
     NSTask *cloneTask = [NSTask new];
     cloneTask.launchPath = @"/usr/local/bin/git";
-    cloneTask.arguments = @[@"clone", repoPath, workingDirectoryPath];
+    cloneTask.arguments = @[@"clone", @"--single-branch", @"--branch", branch, repoPath, workingDirectoryPath];
     [cloneTask launch];
     [cloneTask waitUntilExit];
 }
@@ -81,6 +83,15 @@ void writeStats(NSString *workingDirectoryPath) {
 
 
 int main(int argc, const char * argv[]) {
+    
+    
+    /// @param repo ssh path to the repo
+    /// @param branch repo branch to work with
+    /// @param depth number of commits to go back, optional, default is all commits
+    /// @param step number of commits for iteration, default is 1
+    /// @param output_path path to store stats files
+    
+    
     @autoreleasepool {
         //NSString *repoPath = @"git@github.com:techery/appspector-ios-sdk.git";
         NSString *repoPath = @"git@github.com:deszip/repo-stats.git";
@@ -98,7 +109,7 @@ int main(int argc, const char * argv[]) {
         }
         
         // Get repo
-        cloneRepo(repoPath, workingDirectoryPath);
+        cloneRepo(repoPath, workingDirectoryPath, @"develop");
                 
         // Parameters
         NSUInteger depth = commitsCount(workingDirectoryPath);
@@ -126,6 +137,7 @@ int main(int argc, const char * argv[]) {
             averageStepTime = totalStepTime / (i + 1);
             NSLog(@"Finished step %lu in %f, average: %f, total: %f", (unsigned long)i, elapsed, averageStepTime, totalStepTime);
         }
+        
         
     }
     
