@@ -7,14 +7,46 @@
 
 #import <Foundation/Foundation.h>
 
+void cloneRepo(NSString *repoPath, NSString *workingDirectoryPath) {
+    NSTask *cloneTask = [NSTask new];
+    cloneTask.launchPath = @"/usr/local/bin/git";
+    cloneTask.arguments = @[@"clone", repoPath, workingDirectoryPath];
+    [cloneTask launch];
+    [cloneTask waitUntilExit];
+}
+
+
+/// git rev-list HEAD --count
+NSUInteger commitsCount(NSString *workingDirectoryPath) {
+    NSTask *countTask = [NSTask new];
+    countTask.currentDirectoryPath = workingDirectoryPath;
+    countTask.launchPath = @"/usr/local/bin/git";
+    countTask.arguments = @[@"rev-list", @"HEAD", @"--count"];
+    
+    NSPipe *countPipe = [NSPipe pipe];
+    [countTask setStandardOutput:countPipe];
+    [countTask launch];
+    [countTask waitUntilExit];
+    
+    NSFileHandle *readCommitCount = [countPipe fileHandleForReading];
+    NSString *commitsCount = [[NSString alloc] initWithData:[readCommitCount readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+    
+    return commitsCount.integerValue;
+}
+
+
+/// git reset --hard HEAD~1
 void goBack(NSString *workingDirectoryPath) {
-    // Revert one commit
-    // git reset --hard HEAD~1
     NSTask *revertTask = [NSTask new];
     [revertTask setStandardOutput:[NSPipe pipe]];
     revertTask.currentDirectoryPath = workingDirectoryPath;
     revertTask.launchPath = @"/usr/local/bin/git";
     revertTask.arguments = @[@"reset", @"--hard", @"HEAD~1"];
+    [revertTask setTerminationHandler:^(NSTask *task){
+        if ([task terminationStatus] != EXIT_SUCCESS) {
+            NSLog(@"Revert failed...");
+        }
+    }];
     [revertTask launch];
     [revertTask waitUntilExit];
 }
@@ -50,17 +82,9 @@ void writeStats(NSString *workingDirectoryPath) {
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        /**
-         - git clone ...
-         - git rev-list --count <revision> - count
-         
-         - git rev-parse HEAD - current hash
-         - git reset --hard HEAD~1 - one back
-         
-         */
-        
-        NSString *repoPath = @"git@github.com:techery/appspector-ios-sdk.git";
-        
+        //NSString *repoPath = @"git@github.com:techery/appspector-ios-sdk.git";
+        NSString *repoPath = @"git@github.com:deszip/repo-stats.git";
+    
         // Check working directory
         NSString *workingDirectoryPath = [NSString stringWithFormat:@"/tmp/%@", repoPath.lastPathComponent];
         BOOL isDir;
@@ -74,34 +98,19 @@ int main(int argc, const char * argv[]) {
         }
         
         // Get repo
-        // git clone
-        NSTask *cloneTask = [NSTask new];
-        cloneTask.launchPath = @"/usr/local/bin/git";
-        cloneTask.arguments = @[@"clone", repoPath, workingDirectoryPath];
-        [cloneTask launch];
-        [cloneTask waitUntilExit];
-        
-        // Count commits
-        // git rev-list HEAD --count
-        NSTask *countTask = [NSTask new];
-        countTask.currentDirectoryPath = workingDirectoryPath;
-        countTask.launchPath = @"/usr/local/bin/git";
-        countTask.arguments = @[@"rev-list", @"HEAD", @"--count"];
-        
-        NSPipe *countPipe = [NSPipe pipe];
-        [countTask setStandardOutput:countPipe];
-        [countTask launch];
-        [countTask waitUntilExit];
-        
-        NSFileHandle *readCommitCount = [countPipe fileHandleForReading];
-        NSString *commitsCount = [[NSString alloc] initWithData:[readCommitCount readDataToEndOfFile] encoding:NSUTF8StringEncoding];
+        cloneRepo(repoPath, workingDirectoryPath);
                 
-        NSUInteger depth = commitsCount.integerValue;
-        //NSUInteger depth = 3;
+        // Parameters
+        NSUInteger depth = commitsCount(workingDirectoryPath);
+        NSLog(@"Got %lu commits", (unsigned long)depth);
+        
         NSTimeInterval totalStepTime = 0;
         NSTimeInterval averageStepTime = 0;
         
+        // Write stats
         for (NSUInteger i = 0; i < depth; i++) {
+            NSLog(@"Getitng stats for commit %lu", depth - i);
+            
             NSDate *startDate = [NSDate date];
 
             writeStats(workingDirectoryPath);
