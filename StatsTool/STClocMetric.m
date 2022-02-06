@@ -15,8 +15,9 @@
 
 @implementation STClocMetric
 
-- (instancetype)initWithOutputDirectory:(NSURL *)outputDirectory supportContinuation:(BOOL)continuationEnabled {
+- (instancetype)initWithWorkingDirectory:(NSURL *)workingDirectory outputDirectory:(NSURL *)outputDirectory supportContinuation:(BOOL)continuationEnabled {
     if (self = [super init]) {
+        _workingDirectoryURL = workingDirectory;
         _outputDirectoryURL = outputDirectory;
         _continuationEnabled = continuationEnabled;
     }
@@ -29,6 +30,11 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:@"/opt/homebrew/bin/cloc"]) {
         self.clocBinaryURL = [NSURL fileURLWithPath:@"/opt/homebrew/bin/cloc"];
         clocFound = YES;
+    }
+    
+    BOOL workingDirectoryExists = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:self.workingDirectoryURL.path]) {
+        workingDirectoryExists = YES;
     }
     
     BOOL outputCreated = YES;
@@ -46,8 +52,9 @@
     
     NSLog(@"Checking cloc binary............[%@]", clocFound ? @"OK" : @"FAIL");
     NSLog(@"Checking output path............[%@]", outputWriteable ? @"OK" : @"FAIL");
+    NSLog(@"Checking цщклштп вшкусещкн......[%@]", workingDirectoryExists ? @"OK" : @"FAIL");
     
-    return clocFound && outputCreated && outputWriteable;
+    return clocFound && workingDirectoryExists && outputCreated && outputWriteable;
 }
 
 - (NSURL *)apply:(NSString *)commitHash {
@@ -73,13 +80,13 @@
     // cloc ./ --json --out ./out.json
     NSTask *clocTask = [NSTask new];
     [clocTask setStandardOutput:[NSPipe pipe]];
-    clocTask.currentDirectoryPath = self.outputDirectoryURL.path;
+    clocTask.currentDirectoryPath = self.workingDirectoryURL.path;
     clocTask.executableURL = self.clocBinaryURL;
-    clocTask.arguments = @[@"./", @"--json", @"--out", statsFileName];
+    clocTask.arguments = @[@"./", @"--json", @"--out", outputFileURL.path];
     [clocTask launch];
     [clocTask waitUntilExit];
     
-    return [NSURL fileURLWithPath:[self.outputDirectoryURL URLByAppendingPathComponent:statsFileName].path];
+    return outputFileURL;
 }
 
 @end

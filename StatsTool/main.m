@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
         NSURL *workingDirectoryURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"/tmp/%@", repoURL.lastPathComponent]];
         NSURL *clocOutputURL = [NSURL fileURLWithPath:@"/tmp/cloc_out"];
         
-        STClocMetric *clocMetric = [[STClocMetric alloc] initWithOutputDirectory:clocOutputURL supportContinuation:YES];
+        STClocMetric *clocMetric = [[STClocMetric alloc] initWithWorkingDirectory:workingDirectoryURL outputDirectory:clocOutputURL supportContinuation:YES];
         STGitWalker *walker = [[STGitWalker alloc] initWithRepoURL:repoURL workingDirectory:workingDirectoryURL clocMetric:clocMetric];
         BOOL envReady = [walker prepareEnv];
         

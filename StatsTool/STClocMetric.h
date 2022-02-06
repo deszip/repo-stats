@@ -11,10 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface STClocMetric : NSObject
 
+@property (strong, nonatomic, readonly) NSURL *workingDirectoryURL;
 @property (strong, nonatomic, readonly) NSURL *outputDirectoryURL;
 @property (assign, nonatomic, readonly) BOOL continuationEnabled;
 
-- (instancetype)initWithOutputDirectory:(NSURL *)outputDirectory supportContinuation:(BOOL)continuationEnabled;
+- (instancetype)initWithWorkingDirectory:(NSURL *)workingDirectory
+                         outputDirectory:(NSURL *)outputDirectory
+                     supportContinuation:(BOOL)continuationEnabled;
 
 - (BOOL)prepareEnv;
 - (NSURL *)apply:(NSString *)commitHash;
