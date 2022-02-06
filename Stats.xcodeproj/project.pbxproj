@@ -10,6 +10,7 @@
 		D92F168F25E2BE0E0022087D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92F168E25E2BE0E0022087D /* main.m */; };
 		D92F169F25E2CD780022087D /* cloc.pl in CopyFiles */ = {isa = PBXBuildFile; fileRef = D92F169C25E2C8690022087D /* cloc.pl */; };
 		D94E728C27AE778B0095B6D7 /* STGitWalker.m in Sources */ = {isa = PBXBuildFile; fileRef = D94E728B27AE778B0095B6D7 /* STGitWalker.m */; };
+		D94E728F27AFD1BE0095B6D7 /* STClocMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = D94E728E27AFD1BE0095B6D7 /* STClocMetric.m */; };
 		D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D978267C25D95B3B0097766C /* RepoBuilder.swift */; };
 		D998B74A25BDD5B700207410 /* StatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74925BDD5B700207410 /* StatsApp.swift */; };
 		D998B74C25BDD5B700207410 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74B25BDD5B700207410 /* ContentView.swift */; };
@@ -40,6 +41,8 @@
 		D92F169C25E2C8690022087D /* cloc.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cloc.pl; sourceTree = "<group>"; };
 		D94E728A27AE778B0095B6D7 /* STGitWalker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STGitWalker.h; sourceTree = "<group>"; };
 		D94E728B27AE778B0095B6D7 /* STGitWalker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STGitWalker.m; sourceTree = "<group>"; };
+		D94E728D27AFD1BE0095B6D7 /* STClocMetric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STClocMetric.h; sourceTree = "<group>"; };
+		D94E728E27AFD1BE0095B6D7 /* STClocMetric.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STClocMetric.m; sourceTree = "<group>"; };
 		D978267C25D95B3B0097766C /* RepoBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoBuilder.swift; sourceTree = "<group>"; };
 		D998B74625BDD5B700207410 /* Stats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D998B74925BDD5B700207410 /* StatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsApp.swift; sourceTree = "<group>"; };
@@ -79,6 +82,8 @@
 				D92F168E25E2BE0E0022087D /* main.m */,
 				D94E728A27AE778B0095B6D7 /* STGitWalker.h */,
 				D94E728B27AE778B0095B6D7 /* STGitWalker.m */,
+				D94E728D27AFD1BE0095B6D7 /* STClocMetric.h */,
+				D94E728E27AFD1BE0095B6D7 /* STClocMetric.m */,
 			);
 			path = StatsTool;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94E728F27AFD1BE0095B6D7 /* STClocMetric.m in Sources */,
 				D92F168F25E2BE0E0022087D /* main.m in Sources */,
 				D94E728C27AE778B0095B6D7 /* STGitWalker.m in Sources */,
 			);

@@ -11,18 +11,19 @@
 
 @property (strong, nonatomic) NSURL *repoURL;
 @property (strong, nonatomic) NSURL *workingDirURL;
+@property (strong, nonatomic) STClocMetric *clocMetric;
 
 @property (strong, nonatomic) NSURL *gitBinaryURL;
-@property (strong, nonatomic) NSURL *clocBinaryURL;
 
 @end
 
 @implementation STGitWalker
 
-- (instancetype)initWithRepoURL:(NSURL *)repoURL workingDirectory:(NSURL *)workingDirURL {
+- (instancetype)initWithRepoURL:(NSURL *)repoURL workingDirectory:(NSURL *)workingDirURL clocMetric:(STClocMetric *)clocMetric {
     if (self = [super init]) {
         _repoURL = repoURL;
         _workingDirURL = workingDirURL;
+        _clocMetric = clocMetric;
     }
     
     return self;;
@@ -39,12 +40,6 @@
         }
     }];
     
-    __block BOOL clocFound = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/opt/homebrew/bin/cloc"]) {
-        self.clocBinaryURL = [NSURL fileURLWithPath:@"/opt/homebrew/bin/cloc"];
-        clocFound = YES;
-    }
-    
     BOOL workingDirectoryReady = NO;
     BOOL isDir = NO;
     BOOL workingDirectoryFound = [[NSFileManager defaultManager] fileExistsAtPath:self.workingDirURL.path isDirectory:&isDir];
@@ -60,12 +55,13 @@
         workingDirectoryReady = YES;
     }
     
+    BOOL clocReady = [self.clocMetric prepareEnv];
     
     NSLog(@"Checking git....................[%@]", gitFound ? @"OK" : @"FAIL");
-    NSLog(@"Checking cloc...................[%@]", clocFound ? @"OK" : @"FAIL");
     NSLog(@"Checking working directory......[%@]", workingDirectoryReady ? @"OK" : @"FAIL");
+    NSLog(@"Checking cloc metric............[%@]", clocReady ? @"OK" : @"FAIL");
     
-    return gitFound && clocFound && workingDirectoryReady;
+    return gitFound && workingDirectoryReady && clocReady;
 }
 
 - (void)cloneRepo {
@@ -108,7 +104,7 @@
     [revertTask waitUntilExit];
 }
 
-- (void)writeStats {
+- (NSURL *)writeStats {
     // Get current commit hash
     // git rev-parse HEAD
     NSTask *hashTask = [NSTask new];
@@ -124,16 +120,7 @@
     NSFileHandle *readCommithash = [hashPipe fileHandleForReading];
     NSString *currentHash = [[[NSString alloc] initWithData:[readCommithash readDataToEndOfFile] encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
-    // Count and write a file
-    // cloc ./ --json --out ./out.json
-    NSTask *clocTask = [NSTask new];
-    [clocTask setStandardOutput:[NSPipe pipe]];
-    clocTask.currentDirectoryPath = self.workingDirURL.path;
-    clocTask.executableURL = self.clocBinaryURL;
-    NSString *statsFileName = [NSString stringWithFormat:@"./%@.json", currentHash];
-    clocTask.arguments = @[@"./", @"--json", @"--out", statsFileName];
-    [clocTask launch];
-    [clocTask waitUntilExit];
+    return [self.clocMetric apply:currentHash];
 }
 
 - (void)startProcessing {
@@ -148,12 +135,13 @@
     NSTimeInterval averageStepTime = 0;
     
     // Write stats
+    __block NSMutableArray <NSURL *> *statsResults = [@[] mutableCopy];
     for (NSUInteger i = 0; i < depth; i++) {
         NSLog(@"Getitng stats for commit %lu", depth - i);
         
         NSDate *startDate = [NSDate date];
 
-        [self writeStats];
+        [statsResults addObject:[self writeStats]];
         
         NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startDate];
         totalStepTime += elapsed;
@@ -164,6 +152,10 @@
             [self goBack];
         }
     }
+
+    NSLog(@"Total time: %f", totalStepTime);
+    NSLog(@"Total time: %f", averageStepTime);
+    NSLog(@"Saved %lu results at: %@", (unsigned long)statsResults.count, self.clocMetric.outputDirectoryURL);
 }
 
 @end

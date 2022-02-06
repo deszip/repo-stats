@@ -14,8 +14,10 @@ int main(int argc, const char * argv[]) {
         //NSString *repoPath = @"git@github.com:techery/appspector-ios-sdk.git";
         NSURL *repoURL = [NSURL URLWithString:@"git@github.com:deszip/repo-stats.git"];
         NSURL *workingDirectoryURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"/tmp/%@", repoURL.lastPathComponent]];
+        NSURL *clocOutputURL = [NSURL fileURLWithPath:@"/tmp/cloc_out"];
         
-        STGitWalker *walker = [[STGitWalker alloc] initWithRepoURL:repoURL workingDirectory:workingDirectoryURL];
+        STClocMetric *clocMetric = [[STClocMetric alloc] initWithOutputDirectory:clocOutputURL supportContinuation:YES];
+        STGitWalker *walker = [[STGitWalker alloc] initWithRepoURL:repoURL workingDirectory:workingDirectoryURL clocMetric:clocMetric];
         BOOL envReady = [walker prepareEnv];
         
         if (!envReady) {
