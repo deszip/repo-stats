@@ -40,8 +40,8 @@
     }];
     
     __block BOOL clocFound = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/cloc"]) {
-        self.clocBinaryURL = [NSURL fileURLWithPath:@"/usr/local/bin/cloc"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/opt/homebrew/bin/cloc"]) {
+        self.clocBinaryURL = [NSURL fileURLWithPath:@"/opt/homebrew/bin/cloc"];
         clocFound = YES;
     }
     
@@ -154,12 +154,15 @@
         NSDate *startDate = [NSDate date];
 
         [self writeStats];
-        [self goBack];
         
         NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startDate];
         totalStepTime += elapsed;
         averageStepTime = totalStepTime / (i + 1);
         NSLog(@"Finished step %lu in %f, average: %f, total: %f", (unsigned long)i, elapsed, averageStepTime, totalStepTime);
+        
+        if (i > 0) {
+            [self goBack];
+        }
     }
 }
 
