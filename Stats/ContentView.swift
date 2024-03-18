@@ -18,24 +18,21 @@ extension FocusedValues {
     }
 }
 
+
 struct ContentView: View {
-    
-    @Binding var repos: [Repo]
+    var store: RepoStorage
     var saveAction: (Repo) -> Void
-    var removeAction: (Repo) -> Void
+    var removeAction: (UUID) -> Void
     
-    @State var selectedRepo: Repo?
+    @State var selectedRepos = Set<UUID>()
+
     @State private var showingModal = false
     @State private var showingAlert = false
-    
-    var selectedRepoIndex: Int {
-        repos.firstIndex(where: { $0.id == selectedRepo?.id }) ?? repos.startIndex
-    }
-    
+        
     var body: some View {
         NavigationView {
-            List(selection: $selectedRepo) {
-                ForEach(repos) { repo in
+            List(selection: $selectedRepos) {
+                ForEach(store.repos) { repo in
                     NavigationLink(destination: RepoDetail(repo: repo)) {
                         RepoRow(repo: repo)
                     }.contextMenu {
@@ -51,37 +48,34 @@ struct ContentView: View {
             .navigationTitle("Repos")
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
             .frame(minWidth: 180, idealWidth: 200, maxWidth: 300)
-            .toolbar {
-                Button(action: {
-                    self.showingModal.toggle()
-                }) {
-                    Text("Add")
-                }.sheet(isPresented: $showingModal) {
-                    AddView(showInput: $showingModal, action: { $0.flatMap { saveAction($0) } })
-                }
-            }
-            
+
             Text("Select a Repo")
         }
         .alert(isPresented: $showingAlert) {
             Alert(
                 title: Text("Are you sure?"),
-                message: Text("Do you want to remove the \(selectedRepo?.name ?? "") repo?"),
+                message: Text("Do you want to remove the \(selectedRepos.count) repo?"),
                 primaryButton: .default(Text("OK"), action: {
-                    selectedRepo.flatMap { removeAction($0) }
+                    selectedRepos.first.flatMap { removeAction($0) }
                 }),
                 secondaryButton: .cancel()
             )
+        }.toolbar {
+            Button(action: {
+                self.showingModal.toggle()
+            }) {
+                Text("Add")
+            }.sheet(isPresented: $showingModal) {
+                AddView(showInput: $showingModal, action: {
+                    $0.flatMap { saveAction($0) }
+                })
+            }
         }
-        .focusedValue(\.selectedRepo, $repos[selectedRepoIndex])
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(repos: .constant([Repo(name: "Foo repo",
-                                           path: URL(string:"http://github.com/foo/foo")!,
-                                           imageName: "")]),
-                    saveAction: {_ in }, removeAction: { _ in })
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in })
+//    }
+//}

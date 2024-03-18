@@ -17,18 +17,24 @@ struct AddView: View {
     var body: some View {
         VStack {
             Form {
-                TextField("Repo URL", text: $repoPath)
-                Button(action: {
-                    defer { self.showInput.toggle() }
-                    guard let repoURL = URL(string: repoPath) else { return }
-                    let repo = Repo(name: repoURL.lastPathComponent, path: repoURL, imageName: "")
-                    action(repo)
-                }) {
-                    Text("Save")
+                TextField("Repo URL:", text: $repoPath)
+                HStack {
+                    Button(action: {
+                        self.showInput.toggle()
+                    }) {
+                        Text("Cancel")
+                    }
+                    Button(action: {
+                        defer { self.showInput.toggle() }
+                        guard let repoURL = URL(string: repoPath) else { return }
+                        let repo = Repo(name: repoURL.lastPathComponent, path: repoURL, imageName: "")
+                        action(repo)
+                    }) {
+                        Text("Save")
+                    }
                 }
             }
             .frame(width: 300)
-            .navigationTitle("Landmark Settings")
             .padding(80)
         }
         .frame(minWidth: 200, minHeight: 100)

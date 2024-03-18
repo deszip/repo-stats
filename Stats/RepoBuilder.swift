@@ -7,11 +7,15 @@
 
 import Foundation
 
-struct Repo: Identifiable, Codable, Hashable {
+struct Repo: Identifiable, Codable, Hashable, Equatable {
     var id: UUID = UUID()
     let name: String
     let path: URL
     let imageName: String
+    
+    static func ==(lhs: Repo, rhs: Repo) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 extension Repo {

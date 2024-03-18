@@ -27,11 +27,8 @@ class RepoStorage: ObservableObject {
         save()
     }
     
-    func remove(_ repo: Repo) {
-        repos.firstIndex(of: repo).flatMap {
-            repos.remove(at: $0)
-            save()
-        }
+    func remove(_ repoID: UUID) {
+        repos.removeAll { $0.id == repoID }
     }
     
     func save() {
@@ -39,5 +36,4 @@ class RepoStorage: ObservableObject {
             UserDefaults.standard.setValue(self?.repos.map { $0.encode() }, forKey: "repos")
         }
     }
-    
 }

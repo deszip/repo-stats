@@ -14,7 +14,7 @@ struct StatsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(repos: $storage.repos,
+            ContentView(store: storage,
                         saveAction: { storage.add($0)},
                         removeAction: { storage.remove($0) }
             )
