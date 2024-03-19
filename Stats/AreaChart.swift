@@ -86,8 +86,10 @@ struct AreaChart: View {
         }
         .navigationTitle("Title")
         .onAppear {
+//            let delay = 0.02
+            let delay = 1.0
             for index in 0...dataProvider.count() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.02) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * delay) {
                     withAnimation(.interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
                         // Load data
                         data.append(CodeValue(day: Date(), lines: dataProvider.value(index: index)))
