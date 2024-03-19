@@ -74,8 +74,8 @@ struct ContentView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in })
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in })
+    }
+}

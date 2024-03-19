@@ -12,7 +12,8 @@ struct RepoDetail: View {
     var repo: Repo
     
     var body: some View {
-        Text(String(repo.name))
+//        Text(String(repo.name))
+        AreaChart(dataProvider: DataProvider())
     }
 }
 

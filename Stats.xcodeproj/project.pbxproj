@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D92F168F25E2BE0E0022087D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92F168E25E2BE0E0022087D /* main.m */; };
 		D92F169F25E2CD780022087D /* cloc.pl in CopyFiles */ = {isa = PBXBuildFile; fileRef = D92F169C25E2C8690022087D /* cloc.pl */; };
+		D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96F80E42BA9F23E00B13946 /* AreaChart.swift */; };
 		D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D978267C25D95B3B0097766C /* RepoBuilder.swift */; };
 		D998B74A25BDD5B700207410 /* StatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74925BDD5B700207410 /* StatsApp.swift */; };
 		D998B74C25BDD5B700207410 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74B25BDD5B700207410 /* ContentView.swift */; };
@@ -37,6 +38,7 @@
 		D92F168C25E2BE0E0022087D /* StatsTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StatsTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92F168E25E2BE0E0022087D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D92F169C25E2C8690022087D /* cloc.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cloc.pl; sourceTree = "<group>"; };
+		D96F80E42BA9F23E00B13946 /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
 		D978267C25D95B3B0097766C /* RepoBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoBuilder.swift; sourceTree = "<group>"; };
 		D998B74625BDD5B700207410 /* Stats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D998B74925BDD5B700207410 /* StatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsApp.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				D998B77025BDE50900207410 /* RepoStorage.swift */,
 				D998B77325BDEA1C00207410 /* AddView.swift */,
 				D978267C25D95B3B0097766C /* RepoBuilder.swift */,
+				D96F80E42BA9F23E00B13946 /* AreaChart.swift */,
 			);
 			path = Stats;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */,
 				D998B77425BDEA1C00207410 /* AddView.swift in Sources */,
 				D998B76E25BDDC2400207410 /* RepoRow.swift in Sources */,
+				D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */,
 				D998B77125BDE50900207410 /* RepoStorage.swift in Sources */,
 				D998B76B25BDDA2B00207410 /* RepoDetail.swift in Sources */,
 			);
@@ -241,7 +245,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AM5334753U;
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -254,7 +258,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = AM5334753U;
 				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -395,7 +399,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BR.Stats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -422,7 +426,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BR.Stats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
