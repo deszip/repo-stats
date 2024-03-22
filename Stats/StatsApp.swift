@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+import StatsCore
 
 @main
 struct StatsApp: App {
-    
     @ObservedObject private var storage = RepoStorage()
 
     var body: some Scene {
@@ -22,5 +22,9 @@ struct StatsApp: App {
             .onAppear { storage.load() }
         }
         .commands { SidebarCommands() }
+    }
+
+    init() {
+        STCoreLoader.loadCore()
     }
 }
