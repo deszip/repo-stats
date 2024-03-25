@@ -11,7 +11,7 @@
 /// git clone --single-branch --branch [branch_name] [repo_url]
 void cloneRepo(NSString *repoPath, NSString *workingDirectoryPath, NSString *branch) {
     NSTask *cloneTask = [NSTask new];
-    cloneTask.launchPath = @"/usr/local/bin/git";
+    cloneTask.launchPath = @"/usr/bin/git";
     cloneTask.arguments = @[@"clone", @"--single-branch", @"--branch", branch, repoPath, workingDirectoryPath];
     [cloneTask launch];
     [cloneTask waitUntilExit];
@@ -22,7 +22,7 @@ void cloneRepo(NSString *repoPath, NSString *workingDirectoryPath, NSString *bra
 NSUInteger commitsCount(NSString *workingDirectoryPath) {
     NSTask *countTask = [NSTask new];
     countTask.currentDirectoryPath = workingDirectoryPath;
-    countTask.launchPath = @"/usr/local/bin/git";
+    countTask.launchPath = @"/usr/bin/git";
     countTask.arguments = @[@"rev-list", @"HEAD", @"--count"];
     
     NSPipe *countPipe = [NSPipe pipe];
@@ -42,7 +42,7 @@ void goBack(NSString *workingDirectoryPath) {
     NSTask *revertTask = [NSTask new];
     [revertTask setStandardOutput:[NSPipe pipe]];
     revertTask.currentDirectoryPath = workingDirectoryPath;
-    revertTask.launchPath = @"/usr/local/bin/git";
+    revertTask.launchPath = @"/usr/bin/git";
     revertTask.arguments = @[@"reset", @"--hard", @"HEAD~1"];
     [revertTask setTerminationHandler:^(NSTask *task){
         if ([task terminationStatus] != EXIT_SUCCESS) {
@@ -58,7 +58,7 @@ void writeStats(NSString *workingDirectoryPath) {
     // git rev-parse HEAD
     NSTask *hashTask = [NSTask new];
     hashTask.currentDirectoryPath = workingDirectoryPath;
-    hashTask.launchPath = @"/usr/local/bin/git";
+    hashTask.launchPath = @"/usr/bin/git";
     hashTask.arguments = @[@"rev-parse", @"HEAD"];
     
     NSPipe *hashPipe = [NSPipe pipe];
