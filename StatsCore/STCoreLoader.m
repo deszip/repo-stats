@@ -31,7 +31,7 @@ static NSString * const kSTGroupID = @"group.com.stats";
 
 - (instancetype)init {
     if (self = [super init]) {
-
+        //...
     }
 
     return self;

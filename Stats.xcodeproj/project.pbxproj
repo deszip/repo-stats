@@ -14,7 +14,6 @@
 		D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96F80E42BA9F23E00B13946 /* AreaChart.swift */; };
 		D975B3E32BADED5800FFA407 /* STCoreLoaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECFA2BADECA900C96119 /* STCoreLoaderPrivate.h */; };
 		D975B3E42BADED5D00FFA407 /* STCoreLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECF92BADECA900C96119 /* STCoreLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D975B3E82BADF3F600FFA407 /* StatsStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */; };
 		D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D978267C25D95B3B0097766C /* RepoBuilder.swift */; };
 		D998B74A25BDD5B700207410 /* StatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74925BDD5B700207410 /* StatsApp.swift */; };
 		D998B74C25BDD5B700207410 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74B25BDD5B700207410 /* ContentView.swift */; };
@@ -32,6 +31,7 @@
 		D9A2678A2BADDC85005A995E /* StatsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9A267742BADDC84005A995E /* StatsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9A267942BADDCA8005A995E /* STRepoStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A267922BADDCA8005A995E /* STRepoStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D9A267952BADDCA8005A995E /* STRepoStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A267932BADDCA8005A995E /* STRepoStorage.m */; };
+		D9F859A52BB1E90900FABB93 /* StatsStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,7 +411,6 @@
 				D998B76E25BDDC2400207410 /* RepoRow.swift in Sources */,
 				D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */,
 				D998B77125BDE50900207410 /* RepoStorage.swift in Sources */,
-				D975B3E82BADF3F600FFA407 /* StatsStore.xcdatamodeld in Sources */,
 				D998B76B25BDDA2B00207410 /* RepoDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +422,7 @@
 				D9A267952BADDCA8005A995E /* STRepoStorage.m in Sources */,
 				D9A267782BADDC84005A995E /* StatsCore.docc in Sources */,
 				D904ECFB2BADECA900C96119 /* STCoreLoader.m in Sources */,
+				D9F859A52BB1E90900FABB93 /* StatsStore.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

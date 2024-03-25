@@ -20,6 +20,7 @@ struct StatsApp: App {
             )
             .frame(minWidth: 700, minHeight: 300)
             .onAppear { storage.load() }
+//            .environment(\.managedObjectContext, nil)
         }
         .commands { SidebarCommands() }
     }
