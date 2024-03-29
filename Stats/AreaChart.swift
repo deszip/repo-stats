@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import CoreData
 
 enum ChartInterpolationMethod: Identifiable, CaseIterable {
     case linear
@@ -41,21 +42,42 @@ enum ChartInterpolationMethod: Identifiable, CaseIterable {
 
 struct CodeValue: Equatable {
     let day: Date
-    var lines: Int
+    var lines: Int64
 }
 
-class DataProvider {
-    func count() -> Int {
+protocol DataProvider {
+    func count() -> Int64
+    func value(index: Int64) -> Int64
+}
+
+class RandomDataProvider: DataProvider {
+    func count() -> Int64 {
         return 42
     }
 
-    func value(index: Int) -> Int {
-        return Int.random(in: 0...10000)
+    func value(index: Int64) -> Int64 {
+        return Int64.random(in: 0...10000)
     }
 }
 
+class StoreDataProvider: DataProvider {
+    @FetchRequest (sortDescriptors: [NSSortDescriptor(keyPath: \STSample.date, ascending: true)], animation: . default)
+    var samples: FetchedResults<STSample>
+
+    func count() -> Int64 {
+        return Int64(samples.count)
+    }
+
+    func value(index: Int64) -> Int64 {
+        return samples[Int(index)].lineCount
+    }
+}
+
+
 struct AreaChart: View {
     private let dataProvider: DataProvider
+    @FetchRequest (sortDescriptors: [NSSortDescriptor(keyPath: \STSample.date, ascending: true)], animation: . default)
+    var samples: FetchedResults<STSample>
 
     @State var data: [CodeValue] = []
     @State private var lineWidth = 2.0
