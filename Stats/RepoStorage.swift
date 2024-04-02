@@ -10,6 +10,7 @@ import CoreData
 class RepoStorage: ObservableObject {
     
     private let container: NSPersistentContainer
+    private let workingContext: NSManagedObjectContext
 
     @Published var repos: [Repo] = []
 
@@ -46,6 +47,8 @@ class RepoStorage: ObservableObject {
         description.shouldInferMappingModelAutomatically = true
         description.shouldMigrateStoreAutomatically = true
         self.container.persistentStoreDescriptions = [description]
+
+        self.workingContext = self.container.newBackgroundContext()
     }
 
     func load() {
@@ -72,6 +75,10 @@ class RepoStorage: ObservableObject {
         DispatchQueue.global(qos: .background).async { [weak self] in
             UserDefaults.standard.setValue(self?.repos.map { $0.encode() }, forKey: "repos")
         }
+    }
+
+    func addSamples(repoID: UUID) {
+        
     }
 
 }
