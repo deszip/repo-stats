@@ -24,25 +24,33 @@ struct ContentView: View {
     var saveAction: (Repo) -> Void
     var removeAction: (UUID) -> Void
     
-    @State var selectedRepos = Set<UUID>()
+    @Environment(\.managedObjectContext) private var viewContext
 
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \STRepo.name, ascending: true)],
+        animation: .default)
+    private var repos: FetchedResults<STRepo>
+
+    @State var selectedRepos = Set<UUID>()
     @State private var showingModal = false
     @State private var showingAlert = false
         
     var body: some View {
         NavigationView {
             List(selection: $selectedRepos) {
-                ForEach(store.repos) { repo in
-                    NavigationLink(destination: RepoDetail(repo: repo)) {
-                        RepoRow(repo: repo)
-                    }.contextMenu {
-                        Button(action: {
-                            self.showingAlert = true
-                        }) {
-                            Text("Remove repo")
+//                List {
+                    ForEach(repos) { repo in
+                        NavigationLink(destination: RepoDetail(repo: Repo(with: repo))) {
+                            RepoRow(repo: Repo(with: repo))
+                        }.contextMenu {
+                            Button(action: {
+                                self.showingAlert = true
+                            }) {
+                                Text("Remove repo")
+                            }
                         }
                     }
-                }
+//                }
             }
             .listStyle(SidebarListStyle())
             .navigationTitle("Repos")

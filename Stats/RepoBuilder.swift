@@ -10,7 +10,7 @@ import Foundation
 struct Repo: Identifiable, Codable, Hashable, Equatable {
     var id: UUID = UUID()
     let name: String
-    let path: URL
+    let path: URL?
     let imageName: String
     
     static func ==(lhs: Repo, rhs: Repo) -> Bool {
@@ -34,5 +34,12 @@ extension Repo {
         } else {
             return nil
         }
+    }
+
+    init(with repo: STRepo) {
+        self.id = repo.repoID ?? UUID()
+        self.name = repo.name ?? ""
+        self.path = URL(string: repo.path ?? "")
+        self.imageName = repo.imageURL ?? ""
     }
 }

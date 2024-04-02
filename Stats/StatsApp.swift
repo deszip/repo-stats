@@ -18,9 +18,9 @@ struct StatsApp: App {
                         removeAction: { storage.remove($0) }
             )
             .frame(minWidth: 700, minHeight: 300)
-            .onAppear { storage.load() }
         }
         .commands { SidebarCommands() }
+        .environment(\.managedObjectContext, storage.viewContext)
     }
 
     init() {

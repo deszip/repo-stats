@@ -11,6 +11,7 @@ class RepoStorage: ObservableObject {
     
     private let container: NSPersistentContainer
     private let workingContext: NSManagedObjectContext
+    let viewContext: NSManagedObjectContext
 
     @Published var repos: [Repo] = []
 
@@ -48,37 +49,69 @@ class RepoStorage: ObservableObject {
         description.shouldMigrateStoreAutomatically = true
         self.container.persistentStoreDescriptions = [description]
 
-        self.workingContext = self.container.newBackgroundContext()
-    }
-
-    func load() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let reposData = UserDefaults.standard.value(forKey: "repos") as? [Data] else {
-                return
+        self.container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+        })
 
-            let repos = reposData.map { Repo($0) }.compactMap { $0 }
-            DispatchQueue.main.async { self?.repos = repos }
-        }
+        self.workingContext = self.container.newBackgroundContext()
+        self.viewContext = self.container.viewContext
+        self.viewContext.automaticallyMergesChangesFromParent = true
     }
     
     func add(_ repo: Repo) {
-        repos.append(repo)
-        save()
+        workingContext.perform {
+            guard let repoPath = repo.path?.absoluteString else {
+                return
+            }
+
+            let request = STRepo.fetchRequest()
+            request.predicate = NSPredicate(format: "path = \"\(repoPath)\"")
+            do {
+                let repos = try self.workingContext.fetch(request)
+                if repos.isEmpty {
+                    var newRepo = STRepo(context: self.workingContext)
+                    newRepo = STRepo(context: self.workingContext)
+                    newRepo.creationDate = Date()
+                    newRepo.path = repo.path?.absoluteString
+                    newRepo.name = repo.path?.lastPathComponent
+
+                    self.save()
+                }
+            } catch {
+                fatalError("Failed to fetch repo: \(error)")
+            }
+        }
     }
     
     func remove(_ repoID: UUID) {
-        repos.removeAll { $0.id == repoID }
-    }
-    
-    func save() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            UserDefaults.standard.setValue(self?.repos.map { $0.encode() }, forKey: "repos")
+        workingContext.perform {
+            let request = STRepo.fetchRequest()
+            request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
+            do {
+                let repos = try self.workingContext.fetch(request)
+                if let repo = repos.first {
+                    self.workingContext.delete(repo)
+                    self.save()
+                }
+            } catch {
+                fatalError("Failed to fetch repo: \(error)")
+            }
         }
     }
 
     func addSamples(repoID: UUID) {
-        
+        //...
+    }
+
+    private func save() {
+        do {
+            try self.workingContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
     }
 
 }
