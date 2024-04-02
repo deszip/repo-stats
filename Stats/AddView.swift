@@ -27,7 +27,7 @@ struct AddView: View {
                     Button(action: {
                         defer { self.showInput.toggle() }
                         guard let repoURL = URL(string: repoPath) else { return }
-                        let repo = Repo(name: repoURL.lastPathComponent, path: repoURL, imageName: "")
+                        let repo = Repo(name: repoURL.lastPathComponent, path: repoURL, imageName: "", samplesCount: 0)
                         action(repo)
                     }) {
                         Text("Save")

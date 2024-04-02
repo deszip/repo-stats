@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D904ECF72BADE6C600C96119 /* STRepoStoragePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECF62BADE6C600C96119 /* STRepoStoragePrivate.h */; };
+		D904ECFB2BADECA900C96119 /* STCoreLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D904ECF82BADECA900C96119 /* STCoreLoader.m */; };
+		D91600032BB72EC700C5EE90 /* StatsStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */; };
 		D92F168F25E2BE0E0022087D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92F168E25E2BE0E0022087D /* main.m */; };
 		D92F169F25E2CD780022087D /* cloc.pl in CopyFiles */ = {isa = PBXBuildFile; fileRef = D92F169C25E2C8690022087D /* cloc.pl */; };
 		D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96F80E42BA9F23E00B13946 /* AreaChart.swift */; };
+		D975B3E32BADED5800FFA407 /* STCoreLoaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECFA2BADECA900C96119 /* STCoreLoaderPrivate.h */; };
+		D975B3E42BADED5D00FFA407 /* STCoreLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECF92BADECA900C96119 /* STCoreLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D978267C25D95B3B0097766C /* RepoBuilder.swift */; };
 		D998B74A25BDD5B700207410 /* StatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74925BDD5B700207410 /* StatsApp.swift */; };
 		D998B74C25BDD5B700207410 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74B25BDD5B700207410 /* ContentView.swift */; };
@@ -19,7 +24,30 @@
 		D998B76E25BDDC2400207410 /* RepoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B76D25BDDC2400207410 /* RepoRow.swift */; };
 		D998B77125BDE50900207410 /* RepoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B77025BDE50900207410 /* RepoStorage.swift */; };
 		D998B77425BDEA1C00207410 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B77325BDEA1C00207410 /* AddView.swift */; };
+		D9A267782BADDC84005A995E /* StatsCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = D9A267772BADDC84005A995E /* StatsCore.docc */; };
+		D9A2677E2BADDC85005A995E /* StatsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A267742BADDC84005A995E /* StatsCore.framework */; };
+		D9A267852BADDC85005A995E /* StatsCoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A267842BADDC85005A995E /* StatsCoreTests.m */; };
+		D9A267862BADDC85005A995E /* StatsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A267762BADDC84005A995E /* StatsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9A267942BADDCA8005A995E /* STRepoStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = D9A267922BADDCA8005A995E /* STRepoStorage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9A267952BADDCA8005A995E /* STRepoStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A267932BADDCA8005A995E /* STRepoStorage.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9A2677F2BADDC85005A995E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D998B73E25BDD5B700207410 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D9A267732BADDC84005A995E;
+			remoteInfo = StatsCore;
+		};
+		D9A267812BADDC85005A995E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D998B73E25BDD5B700207410 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D998B74525BDD5B700207410;
+			remoteInfo = Stats;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D92F168A25E2BE0E0022087D /* CopyFiles */ = {
@@ -35,10 +63,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D904ECF62BADE6C600C96119 /* STRepoStoragePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRepoStoragePrivate.h; sourceTree = "<group>"; };
+		D904ECF82BADECA900C96119 /* STCoreLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STCoreLoader.m; sourceTree = "<group>"; };
+		D904ECF92BADECA900C96119 /* STCoreLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STCoreLoader.h; sourceTree = "<group>"; };
+		D904ECFA2BADECA900C96119 /* STCoreLoaderPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STCoreLoaderPrivate.h; sourceTree = "<group>"; };
 		D92F168C25E2BE0E0022087D /* StatsTool */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StatsTool; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92F168E25E2BE0E0022087D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D92F169C25E2C8690022087D /* cloc.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = cloc.pl; sourceTree = "<group>"; };
 		D96F80E42BA9F23E00B13946 /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
+		D975B3E62BADF15D00FFA407 /* StatsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StatsModel.xcdatamodel; sourceTree = "<group>"; };
 		D978267C25D95B3B0097766C /* RepoBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoBuilder.swift; sourceTree = "<group>"; };
 		D998B74625BDD5B700207410 /* Stats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D998B74925BDD5B700207410 /* StatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsApp.swift; sourceTree = "<group>"; };
@@ -51,6 +84,13 @@
 		D998B76D25BDDC2400207410 /* RepoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoRow.swift; sourceTree = "<group>"; };
 		D998B77025BDE50900207410 /* RepoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoStorage.swift; sourceTree = "<group>"; };
 		D998B77325BDEA1C00207410 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		D9A267742BADDC84005A995E /* StatsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StatsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A267762BADDC84005A995E /* StatsCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatsCore.h; sourceTree = "<group>"; };
+		D9A267772BADDC84005A995E /* StatsCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StatsCore.docc; sourceTree = "<group>"; };
+		D9A2677D2BADDC84005A995E /* StatsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9A267842BADDC85005A995E /* StatsCoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatsCoreTests.m; sourceTree = "<group>"; };
+		D9A267922BADDCA8005A995E /* STRepoStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRepoStorage.h; sourceTree = "<group>"; };
+		D9A267932BADDCA8005A995E /* STRepoStorage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRepoStorage.m; sourceTree = "<group>"; };
 		D9BAD5E12BAB9D6C00FACAD6 /* StatsToolDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StatsToolDebug.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +106,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A267712BADDC84005A995E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A2677A2BADDC84005A995E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A2677E2BADDC85005A995E /* StatsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +142,8 @@
 			children = (
 				D998B74825BDD5B700207410 /* Stats */,
 				D92F168D25E2BE0E0022087D /* StatsTool */,
+				D9A267752BADDC84005A995E /* StatsCore */,
+				D9A267832BADDC85005A995E /* StatsCoreTests */,
 				D998B74725BDD5B700207410 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,6 +153,8 @@
 			children = (
 				D998B74625BDD5B700207410 /* Stats.app */,
 				D92F168C25E2BE0E0022087D /* StatsTool */,
+				D9A267742BADDC84005A995E /* StatsCore.framework */,
+				D9A2677D2BADDC84005A995E /* StatsCoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,7 +186,46 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D9A267752BADDC84005A995E /* StatsCore */ = {
+			isa = PBXGroup;
+			children = (
+				D9A267762BADDC84005A995E /* StatsCore.h */,
+				D9A267772BADDC84005A995E /* StatsCore.docc */,
+				D904ECF92BADECA900C96119 /* STCoreLoader.h */,
+				D904ECFA2BADECA900C96119 /* STCoreLoaderPrivate.h */,
+				D904ECF82BADECA900C96119 /* STCoreLoader.m */,
+				D9A267922BADDCA8005A995E /* STRepoStorage.h */,
+				D904ECF62BADE6C600C96119 /* STRepoStoragePrivate.h */,
+				D9A267932BADDCA8005A995E /* STRepoStorage.m */,
+				D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */,
+			);
+			path = StatsCore;
+			sourceTree = "<group>";
+		};
+		D9A267832BADDC85005A995E /* StatsCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9A267842BADDC85005A995E /* StatsCoreTests.m */,
+			);
+			path = StatsCoreTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D9A2676F2BADDC84005A995E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A267862BADDC85005A995E /* StatsCore.h in Headers */,
+				D975B3E32BADED5800FFA407 /* STCoreLoaderPrivate.h in Headers */,
+				D975B3E42BADED5D00FFA407 /* STCoreLoader.h in Headers */,
+				D9A267942BADDCA8005A995E /* STRepoStorage.h in Headers */,
+				D904ECF72BADE6C600C96119 /* STRepoStoragePrivate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		D92F168B25E2BE0E0022087D /* StatsTool */ = {
@@ -164,6 +262,43 @@
 			productReference = D998B74625BDD5B700207410 /* Stats.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D9A267732BADDC84005A995E /* StatsCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9A267902BADDC85005A995E /* Build configuration list for PBXNativeTarget "StatsCore" */;
+			buildPhases = (
+				D9A2676F2BADDC84005A995E /* Headers */,
+				D9A267702BADDC84005A995E /* Sources */,
+				D9A267712BADDC84005A995E /* Frameworks */,
+				D9A267722BADDC84005A995E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StatsCore;
+			productName = StatsCore;
+			productReference = D9A267742BADDC84005A995E /* StatsCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D9A2677C2BADDC84005A995E /* StatsCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9A267912BADDC85005A995E /* Build configuration list for PBXNativeTarget "StatsCoreTests" */;
+			buildPhases = (
+				D9A267792BADDC84005A995E /* Sources */,
+				D9A2677A2BADDC84005A995E /* Frameworks */,
+				D9A2677B2BADDC84005A995E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9A267802BADDC85005A995E /* PBXTargetDependency */,
+				D9A267822BADDC85005A995E /* PBXTargetDependency */,
+			);
+			name = StatsCoreTests;
+			productName = StatsCoreTests;
+			productReference = D9A2677D2BADDC84005A995E /* StatsCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -178,6 +313,13 @@
 					};
 					D998B74525BDD5B700207410 = {
 						CreatedOnToolsVersion = 12.3;
+					};
+					D9A267732BADDC84005A995E = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					D9A2677C2BADDC84005A995E = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = D998B74525BDD5B700207410;
 					};
 				};
 			};
@@ -196,6 +338,8 @@
 			targets = (
 				D998B74525BDD5B700207410 /* Stats */,
 				D92F168B25E2BE0E0022087D /* StatsTool */,
+				D9A267732BADDC84005A995E /* StatsCore */,
+				D9A2677C2BADDC84005A995E /* StatsCoreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,6 +351,20 @@
 			files = (
 				D998B75125BDD5B800207410 /* Preview Assets.xcassets in Resources */,
 				D998B74E25BDD5B800207410 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A267722BADDC84005A995E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A2677B2BADDC84005A995E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,11 +390,43 @@
 				D998B76E25BDDC2400207410 /* RepoRow.swift in Sources */,
 				D96F80E52BA9F23E00B13946 /* AreaChart.swift in Sources */,
 				D998B77125BDE50900207410 /* RepoStorage.swift in Sources */,
+				D91600032BB72EC700C5EE90 /* StatsStore.xcdatamodeld in Sources */,
 				D998B76B25BDDA2B00207410 /* RepoDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9A267702BADDC84005A995E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A267952BADDCA8005A995E /* STRepoStorage.m in Sources */,
+				D9A267782BADDC84005A995E /* StatsCore.docc in Sources */,
+				D904ECFB2BADECA900C96119 /* STCoreLoader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9A267792BADDC84005A995E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9A267852BADDC85005A995E /* StatsCoreTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9A267802BADDC85005A995E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D9A267732BADDC84005A995E /* StatsCore */;
+			targetProxy = D9A2677F2BADDC85005A995E /* PBXContainerItemProxy */;
+		};
+		D9A267822BADDC85005A995E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D998B74525BDD5B700207410 /* Stats */;
+			targetProxy = D9A267812BADDC85005A995E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D92F169025E2BE0E0022087D /* Debug */ = {
@@ -392,13 +582,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Stats/Stats.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Stats/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = R76R7NWC75;
+				DEVELOPMENT_TEAM = AM5334753U;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Stats/Info.plist;
@@ -410,7 +598,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.osomo.Stats;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -445,6 +632,128 @@
 			};
 			name = Release;
 		};
+		D9A2678C2BADDC85005A995E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C4HFK97J3U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = group.com.statsbuilder.core;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D9A2678D2BADDC85005A995E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C4HFK97J3U;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = ST.StatsCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D9A2678E2BADDC85005A995E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AM5334753U;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ST.StatsCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stats";
+			};
+			name = Debug;
+		};
+		D9A2678F2BADDC85005A995E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AM5334753U;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ST.StatsCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Stats";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -475,7 +784,38 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D9A267902BADDC85005A995E /* Build configuration list for PBXNativeTarget "StatsCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9A2678C2BADDC85005A995E /* Debug */,
+				D9A2678D2BADDC85005A995E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9A267912BADDC85005A995E /* Build configuration list for PBXNativeTarget "StatsCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9A2678E2BADDC85005A995E /* Debug */,
+				D9A2678F2BADDC85005A995E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D975B3E62BADF15D00FFA407 /* StatsModel.xcdatamodel */,
+			);
+			currentVersion = D975B3E62BADF15D00FFA407 /* StatsModel.xcdatamodel */;
+			path = StatsStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D998B73E25BDD5B700207410 /* Project object */;
 }
