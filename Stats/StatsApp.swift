@@ -16,7 +16,8 @@ struct StatsApp: App {
             ContentView(store: storage,
                         saveAction: { storage.add($0) },
                         removeAction: { storage.remove($0) },
-                        loadAction: { storage.addSamples(repoID: $0) }
+                        loadAction: { storage.addSamples(repoID: $0) },
+                        dropAction: { storage.dropSamples(repoID: $0) }
             )
             .frame(minWidth: 700, minHeight: 300)
         }

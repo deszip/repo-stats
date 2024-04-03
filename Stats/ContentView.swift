@@ -24,6 +24,7 @@ struct ContentView: View {
     var saveAction: (Repo) -> Void
     var removeAction: (UUID) -> Void
     var loadAction: (UUID) -> Void
+    var dropAction: (UUID) -> Void
     
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -51,6 +52,11 @@ struct ContentView: View {
                         selectedRepos.first?.repoID.flatMap { loadAction($0) }
                     }) {
                         Text("Load samples")
+                    }
+                    Button(action: {
+                        selectedRepos.first?.repoID.flatMap { dropAction($0) }
+                    }) {
+                        Text("Drop samples")
                     }
                 }
             }
@@ -86,6 +92,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in }, loadAction: { _ in })
+        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in }, loadAction: { _ in }, dropAction: { _ in })
     }
 }

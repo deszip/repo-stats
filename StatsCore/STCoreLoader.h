@@ -13,10 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface STCoreLoader : NSObject
 
-+ (void)loadCore;
-
-+ (STRepoStorage *)repoStorage;
-
 @end
 
 NS_ASSUME_NONNULL_END

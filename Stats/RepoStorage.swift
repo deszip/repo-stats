@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import StatsCore
 
 class RepoStorage: ObservableObject {
     
@@ -107,17 +108,70 @@ class RepoStorage: ObservableObject {
             request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
             do {
                 let repos = try self.workingContext.fetch(request)
-                if let repo = repos.first {
-                    for _ in 0...9 {
+                if let repo = repos.first, let repoPath = repo.path {
+//                    for index in 0...9 {
+//                        let sample = STSample(context: self.workingContext)
+//                        sample.sampleID = UUID()
+//                        sample.lineCount = Int64.random(in: 0...10000)
+//                        sample.date = Date()
+//                        sample.commitHash = "foohash"
+//                        sample.repo = repo
+//                        repo.updateDate = Date()
+//                        self.save()
+//                    }
+                    
+                    let tempDirectoryURL = FileManager.default.temporaryDirectory
+                        let newDirectoryName = UUID().uuidString // Unique directory name
+                        let newDirectoryURL = tempDirectoryURL.appendingPathComponent(newDirectoryName)
+
+                        do {
+                            try FileManager.default.createDirectory(at: newDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+                        } catch {
+                            print("Failed to create directory: \(error)")
+                        }
+                    
+                    print("Working dir: \(newDirectoryURL)")
+                    
+                    let gitToolkit = STGitToolkit(workingDIrectory: newDirectoryURL)
+                    gitToolkit.cloneRepo(repoPath, branch: "main")
+                    let commitsCount = gitToolkit.commitsCount()
+                    
+                    print("Commits: \(commitsCount)")
+                    
+                    for commitIdx in 0...commitsCount {
+                        let hash = gitToolkit.getStats()
+                        
+                        print("Hash \(commitIdx): \(hash)")
+                        
                         let sample = STSample(context: self.workingContext)
                         sample.sampleID = UUID()
                         sample.lineCount = Int64.random(in: 0...10000)
                         sample.date = Date()
-                        sample.commitHash = "foohash"
+                        sample.commitHash = hash
                         sample.repo = repo
                         repo.updateDate = Date()
                         self.save()
+                        
+                        if !gitToolkit.goBack() {
+                            return;
+                        }
                     }
+                }
+            } catch {
+                fatalError("Failed to fetch repo: \(error)")
+            }
+        }
+    }
+    
+    func dropSamples(repoID: UUID) {
+        workingContext.perform {
+            let request = STRepo.fetchRequest()
+            request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
+            do {
+                let repos = try self.workingContext.fetch(request)
+                if let repo = repos.first {
+                    repo.samples?.compactMap { $0 as? STSample }.forEach { self.workingContext.delete($0) }
+                    self.save()
                 }
             } catch {
                 fatalError("Failed to fetch repo: \(error)")

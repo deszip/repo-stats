@@ -67,7 +67,7 @@ class RandomDataProvider: DataProvider {
 //    @ObservedObject var repo: STRepo
 //    
 //    func count() -> Int64 {
-//        return Int64(repo.samples.count)
+//        return Int64(repo.samples.coun1t)
 //    }
 //
 //    func value(index: Int64) -> Int64? {
@@ -132,7 +132,10 @@ struct AreaChart: View {
 
     private var chart: some View {
 //        Chart(data, id: \.day) {
-        Chart(repo.samples?.allObjects ?? [], id: \.sampleID) {
+        Chart((repo.samples?.allObjects as? [STSample] ?? [])
+            .map { CodeValue(day: $0.date ?? Date(), lines: $0.lineCount) }
+            .sorted(by: { lhs, rhs in return lhs.day < rhs.day }),
+              id: \.day) {
             AreaMark(
                 x: .value("Date", $0.day),
                 y: .value("LOC", $0.lines)
