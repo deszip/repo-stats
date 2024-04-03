@@ -60,28 +60,30 @@ class RandomDataProvider: DataProvider {
     }
 }
 
-class StoreDataProvider: DataProvider {
-//    @FetchRequest (sortDescriptors: [NSSortDescriptor(keyPath: \STSample.date, ascending: true)], animation: . default)
-//    var samples: FetchedResults<STSample>
-
-    @ObservedObject var repo: STRepo
-    
-    func count() -> Int64 {
-        return Int64(repo.samples.count)
-    }
-
-    func value(index: Int64) -> Int64? {
-        if index < repo.samples.count {
-            return repo.samples?.allObjects.enumerated()[Int(index)].lineCount
-        }
-
-        return nil
-    }
-}
+//class StoreDataProvider: DataProvider {
+////    @FetchRequest (sortDescriptors: [NSSortDescriptor(keyPath: \STSample.date, ascending: true)], animation: . default)
+////    var samples: FetchedResults<STSample>
+//
+//    @ObservedObject var repo: STRepo
+//    
+//    func count() -> Int64 {
+//        return Int64(repo.samples.count)
+//    }
+//
+//    func value(index: Int64) -> Int64? {
+//        if index < repo.samples.count {
+//            return repo.samples?.allObjects.enumerated()[Int(index)].lineCount
+//        }
+//
+//        return nil
+//    }
+//}
 
 
 struct AreaChart: View {
-    private let dataProvider: DataProvider
+    @ObservedObject var repo: STRepo
+
+//    private let dataProvider: DataProvider
 //    @FetchRequest (sortDescriptors: [NSSortDescriptor(keyPath: \STSample.date, ascending: true)], animation: . default)
 //    var samples: FetchedResults<STSample>
 
@@ -92,9 +94,9 @@ struct AreaChart: View {
     @State private var showGradient = true
     @State private var gradientRange = 0.5
 
-    init(dataProvider: DataProvider) {
-        self.dataProvider = dataProvider
-    }
+//    init(dataProvider: DataProvider) {
+//        self.dataProvider = dataProvider
+//    }
 
     private var gradient: Gradient {
         var colors = [chartColor]
@@ -113,24 +115,24 @@ struct AreaChart: View {
             customisation
         }
         .navigationTitle("Title")
-        .onAppear {
-//            let delay = 0.02
-            let delay = 1.0
-            for index in 0...dataProvider.count() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * delay) {
-                    withAnimation(.interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
-                        // Load data
-                        if let value = dataProvider.value(index: index) {
-                            data.append(CodeValue(day: Date(), lines: value))
-                        }
-                    }
-                }
-            }
-        }
+//        .onAppear {
+//            let delay = 1.0
+//            for index in 0...dataProvider.count() {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * delay) {
+//                    withAnimation(.interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
+//                        // Load data
+//                        if let value = dataProvider.value(index: index) {
+//                            data.append(CodeValue(day: Date(), lines: value))
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     private var chart: some View {
-        Chart(data, id: \.day) {
+//        Chart(data, id: \.day) {
+        Chart(repo.samples?.allObjects ?? [], id: \.sampleID) {
             AreaMark(
                 x: .value("Date", $0.day),
                 y: .value("LOC", $0.lines)

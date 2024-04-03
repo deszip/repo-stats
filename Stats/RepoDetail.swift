@@ -12,7 +12,7 @@ struct RepoDetail: View {
     @ObservedObject var repo: STRepo
 
     var body: some View {
-        AreaChart(dataProvider: StoreDataProvider())
+        AreaChart(repo: repo)
     }
 }
 

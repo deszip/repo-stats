@@ -39,7 +39,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(repos, id: \.self, selection: $selectedRepos) { repo in
-                NavigationLink(destination: RepoDetail(repo: Repo(with: repo))) {
+                NavigationLink(destination: RepoDetail(repo: repo)) {
                     RepoRow(repo: repo)
                 }.contextMenu {
                     Button(action: {
