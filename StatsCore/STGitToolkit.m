@@ -62,41 +62,27 @@
     revertTask.currentDirectoryPath = self.workingDirectory.path;
     revertTask.launchPath = @"/usr/bin/git";
     revertTask.arguments = @[@"reset", @"--hard", @"HEAD~1"];
-//    [revertTask setTerminationHandler:^(NSTask *task){
-//        if ([task terminationStatus] != EXIT_SUCCESS) {
-//            NSLog(@"Revert failed...");
-//            success = NO;
-//        }
-//    }];
     [revertTask launch];
     [revertTask waitUntilExit];
     
     return success;
 }
 
-- (NSString *)getStats:(NSString *)commit {
-//    return [self currentCommitHash];
-
-    // Count and write a file
-    // cloc ./ --json --out ./out.json
-    //    NSTask *clocTask = [NSTask new];
-    //    [clocTask setStandardOutput:[NSPipe pipe]];
-    //    clocTask.currentDirectoryPath = workingDirectoryPath;
-    //    clocTask.launchPath = @"/usr/local/bin/cloc";
-    //    NSString *statsFileName = [NSString stringWithFormat:@"./%@.json", currentHash];
-    //    clocTask.arguments = @[@"./", @"--json", @"--out", statsFileName];
-    //    [clocTask launch];
-    //    [clocTask waitUntilExit];
-
+- (STCommit *)getStats:(NSString *)commitHash {
     NSTask *task = [NSTask new];
     [task setStandardOutput:[NSPipe pipe]];
     task.currentDirectoryPath = self.workingDirectory.path;
     task.launchPath = @"/usr/bin/git";
-    task.arguments = @[@"checkout", commit];
+    task.arguments = @[@"checkout", commitHash];
     [task launch];
     [task waitUntilExit];
 
-    return [self currentCommitHash];
+    STCommit *commit = [STCommit new];
+    commit.commitDate = [self commitDate:commitHash];
+    commit.commitHash = commitHash;
+    commit.totalLineCount = [self lineCount];
+
+    return commit;
 }
 
 // Get current commit hash
@@ -154,6 +140,59 @@
     return branchName;
 }
 
-//- (NSArray <>)
+- (NSUInteger)lineCount {
+    NSArray *prefetchedProperties = @[
+        NSURLIsRegularFileKey,
+        NSURLFileAllocatedSizeKey,
+        NSURLTotalFileAllocatedSizeKey,
+    ];
+
+    __block BOOL errorDidOccur = NO;
+    BOOL (^errorHandler)(NSURL *, NSError *) = ^(NSURL *url, NSError *localError) {
+        if (localError != NULL) {
+            NSLog(@"Enumerator failed:\n\tURL: %@\n\tError: %@", url, localError);
+        }
+        return NO;
+    };
+
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:self.workingDirectory
+                                                             includingPropertiesForKeys:prefetchedProperties
+                                                                                options:(NSDirectoryEnumerationOptions)0
+                                                                           errorHandler:errorHandler];
+
+    NSArray *supportedExtensions = @[@"m", @"h", @"swift", @"c", @"mm", @"hpp"];
+    NSUInteger totalCount = 0;
+    for (NSURL *itemURL in enumerator) {
+        if ([supportedExtensions containsObject:itemURL.pathExtension]) {
+            NSError *error;
+            NSString *contents = [NSString stringWithContentsOfURL:itemURL encoding:NSUTF8StringEncoding error:&error];
+            if (contents) {
+                totalCount += [contents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]].count;
+            } else {
+                NSLog(@"Failed to get file contentsat: %@, %@", itemURL, error);
+            }
+        }
+    }
+
+    return totalCount;
+}
+
+- (NSDate *)commitDate:(NSString *)commitHash {
+    // git show -s --format=%ct
+    NSTask *task = [NSTask new];
+    task.currentDirectoryPath = self.workingDirectory.path;
+    task.launchPath = @"/usr/bin/git";
+    task.arguments = @[@"show", @"-s", @"--format=%ct", commitHash];
+
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    [task launch];
+    [task waitUntilExit];
+
+    NSFileHandle *readHandle = [pipe fileHandleForReading];
+    NSString *output = [[[NSString alloc] initWithData:[readHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    return [NSDate dateWithTimeIntervalSince1970:output.doubleValue];;
+}
 
 @end

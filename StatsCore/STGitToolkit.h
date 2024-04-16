@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <StatsCore/STCommit.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface STGitToolkit : NSObject
@@ -16,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cloneRepo:(NSString *)repoPath branch:(NSString *)branch;
 - (NSUInteger)commitsCount;
 - (BOOL)goBack;
-- (NSString *)getStats:(NSString *)commit;
+- (STCommit *)getStats:(NSString *)commitHash;
 
 - (NSArray <NSString *> *)listCommits;
 
