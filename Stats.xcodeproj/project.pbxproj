@@ -19,6 +19,8 @@
 		D975B3E32BADED5800FFA407 /* STCoreLoaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECFA2BADECA900C96119 /* STCoreLoaderPrivate.h */; };
 		D975B3E42BADED5D00FFA407 /* STCoreLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = D904ECF92BADECA900C96119 /* STCoreLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D978267D25D95B3B0097766C /* RepoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D978267C25D95B3B0097766C /* RepoBuilder.swift */; };
+		D9873DA82BCED6A0000C9C1D /* STCommit.h in Headers */ = {isa = PBXBuildFile; fileRef = D9873DA62BCED6A0000C9C1D /* STCommit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9873DA92BCED6A0000C9C1D /* STCommit.m in Sources */ = {isa = PBXBuildFile; fileRef = D9873DA72BCED6A0000C9C1D /* STCommit.m */; };
 		D998B74A25BDD5B700207410 /* StatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74925BDD5B700207410 /* StatsApp.swift */; };
 		D998B74C25BDD5B700207410 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998B74B25BDD5B700207410 /* ContentView.swift */; };
 		D998B74E25BDD5B800207410 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D998B74D25BDD5B800207410 /* Assets.xcassets */; };
@@ -93,6 +95,8 @@
 		D96F80E42BA9F23E00B13946 /* AreaChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChart.swift; sourceTree = "<group>"; };
 		D975B3E62BADF15D00FFA407 /* StatsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StatsModel.xcdatamodel; sourceTree = "<group>"; };
 		D978267C25D95B3B0097766C /* RepoBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoBuilder.swift; sourceTree = "<group>"; };
+		D9873DA62BCED6A0000C9C1D /* STCommit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STCommit.h; sourceTree = "<group>"; };
+		D9873DA72BCED6A0000C9C1D /* STCommit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STCommit.m; sourceTree = "<group>"; };
 		D998B74625BDD5B700207410 /* Stats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D998B74925BDD5B700207410 /* StatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsApp.swift; sourceTree = "<group>"; };
 		D998B74B25BDD5B700207410 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				D975B3E52BADF15D00FFA407 /* StatsStore.xcdatamodeld */,
 				D9445F202BBDDF18003E28D5 /* STGitToolkit.h */,
 				D9445F212BBDDF18003E28D5 /* STGitToolkit.m */,
+				D9873DA62BCED6A0000C9C1D /* STCommit.h */,
+				D9873DA72BCED6A0000C9C1D /* STCommit.m */,
 			);
 			path = StatsCore;
 			sourceTree = "<group>";
@@ -246,6 +252,7 @@
 				D9A267862BADDC85005A995E /* StatsCore.h in Headers */,
 				D9445F222BBDDF18003E28D5 /* STGitToolkit.h in Headers */,
 				D975B3E32BADED5800FFA407 /* STCoreLoaderPrivate.h in Headers */,
+				D9873DA82BCED6A0000C9C1D /* STCommit.h in Headers */,
 				D975B3E42BADED5D00FFA407 /* STCoreLoader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9A267782BADDC84005A995E /* StatsCore.docc in Sources */,
+				D9873DA92BCED6A0000C9C1D /* STCommit.m in Sources */,
 				D904ECFB2BADECA900C96119 /* STCoreLoader.m in Sources */,
 				D9445F232BBDDF18003E28D5 /* STGitToolkit.m in Sources */,
 			);

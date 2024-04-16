@@ -132,29 +132,27 @@ class RepoStorage: ObservableObject {
                     
                     print("Working dir: \(newDirectoryURL)")
                     
-                    let gitToolkit = STGitToolkit(workingDIrectory: newDirectoryURL)
-                    gitToolkit.cloneRepo(repoPath, branch: "main")
-                    let commitsCount = gitToolkit.commitsCount()
+                    let gitToolkit = STGitToolkit(workingDirectory: newDirectoryURL)
+                    gitToolkit.cloneRepo(repoPath, branch: "develop")
+//                    let commitsCount = gitToolkit.commitsCount()
+//                    print("Commits: \(commitsCount)")
                     
-                    print("Commits: \(commitsCount)")
-                    
-                    for commitIdx in 0...commitsCount {
-                        let hash = gitToolkit.getStats()
-                        
-                        print("Hash \(commitIdx): \(hash)")
-                        
+                    let commitHashes = gitToolkit.listCommits()
+                    print("Commits: \(commitHashes.count)")
+
+                    for (idx, commitHash) in commitHashes.enumerated().reversed() {
+                        let commit = gitToolkit.getStats(commitHash)
+                        print("Hash \(idx): \(commit.commitHash)")
+
                         let sample = STSample(context: self.workingContext)
                         sample.sampleID = UUID()
-                        sample.lineCount = Int64.random(in: 0...10000)
-                        sample.date = Date()
-                        sample.commitHash = hash
+//                        sample.lineCount = Int64.random(in: 0...10000)
+                        sample.lineCount = Int64(commit.totalLineCount)
+                        sample.date = commit.commitDate
+                        sample.commitHash = commit.commitHash
                         sample.repo = repo
                         repo.updateDate = Date()
                         self.save()
-                        
-                        if !gitToolkit.goBack() {
-                            return;
-                        }
                     }
                 }
             } catch {
