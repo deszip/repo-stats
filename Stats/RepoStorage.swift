@@ -132,17 +132,18 @@ class RepoStorage: ObservableObject {
                     
                     print("Working dir: \(newDirectoryURL)")
                     
-                    let gitToolkit = STGitToolkit(workingDIrectory: newDirectoryURL)
-                    gitToolkit.cloneRepo(repoPath, branch: "main")
-                    let commitsCount = gitToolkit.commitsCount()
+                    let gitToolkit = STGitToolkit(workingDirectory: newDirectoryURL)
+                    gitToolkit.cloneRepo(repoPath, branch: "develop")
+//                    let commitsCount = gitToolkit.commitsCount()
+//                    print("Commits: \(commitsCount)")
                     
-                    print("Commits: \(commitsCount)")
-                    
-                    for commitIdx in 0...commitsCount {
-                        let hash = gitToolkit.getStats()
-                        
-                        print("Hash \(commitIdx): \(hash)")
-                        
+                    let commits = gitToolkit.listCommits()
+                    print("Commits: \(commits.count)")
+
+                    for (idx, commit) in commits.enumerated() {
+                        let hash = gitToolkit.getStats(commit)
+                        print("Hash \(idx): \(hash)")
+
                         let sample = STSample(context: self.workingContext)
                         sample.sampleID = UUID()
                         sample.lineCount = Int64.random(in: 0...10000)
@@ -151,10 +152,6 @@ class RepoStorage: ObservableObject {
                         sample.repo = repo
                         repo.updateDate = Date()
                         self.save()
-                        
-                        if !gitToolkit.goBack() {
-                            return;
-                        }
                     }
                 }
             } catch {

@@ -11,12 +11,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface STGitToolkit : NSObject
 
-- (instancetype)initWithWorkingDIrectory:(NSURL *)workingDirectory;
+- (instancetype)initWithWorkingDirectory:(NSURL *)workingDirectory;
 
 - (void)cloneRepo:(NSString *)repoPath branch:(NSString *)branch;
 - (NSUInteger)commitsCount;
 - (BOOL)goBack;
-- (NSString *)getStats;
+- (NSString *)getStats:(NSString *)commit;
+
+- (NSArray <NSString *> *)listCommits;
 
 @end
 
