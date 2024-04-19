@@ -109,17 +109,6 @@ class RepoStorage: ObservableObject {
             do {
                 let repos = try self.workingContext.fetch(request)
                 if let repo = repos.first, let repoPath = repo.path {
-//                    for index in 0...9 {
-//                        let sample = STSample(context: self.workingContext)
-//                        sample.sampleID = UUID()
-//                        sample.lineCount = Int64.random(in: 0...10000)
-//                        sample.date = Date()
-//                        sample.commitHash = "foohash"
-//                        sample.repo = repo
-//                        repo.updateDate = Date()
-//                        self.save()
-//                    }
-                    
                     let tempDirectoryURL = FileManager.default.temporaryDirectory
                         let newDirectoryName = UUID().uuidString // Unique directory name
                         let newDirectoryURL = tempDirectoryURL.appendingPathComponent(newDirectoryName)
@@ -134,8 +123,6 @@ class RepoStorage: ObservableObject {
                     
                     let gitToolkit = STGitToolkit(workingDirectory: newDirectoryURL)
                     gitToolkit.cloneRepo(repoPath, branch: "develop")
-//                    let commitsCount = gitToolkit.commitsCount()
-//                    print("Commits: \(commitsCount)")
                     
                     let commitHashes = gitToolkit.listCommits()
                     print("Commits: \(commitHashes.count)")
@@ -146,7 +133,6 @@ class RepoStorage: ObservableObject {
 
                         let sample = STSample(context: self.workingContext)
                         sample.sampleID = UUID()
-//                        sample.lineCount = Int64.random(in: 0...10000)
                         sample.lineCount = Int64(commit.totalLineCount)
                         sample.date = commit.commitDate
                         sample.commitHash = commit.commitHash

@@ -119,6 +119,7 @@
 
     NSFileHandle *readCommithash = [hashPipe fileHandleForReading];
     NSString *currentHash = [[[NSString alloc] initWithData:[readCommithash readDataToEndOfFile] encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [readCommithash closeAndReturnError:nil];
 
     return currentHash;
 }
@@ -183,12 +184,19 @@
     NSUInteger totalCount = 0;
     for (NSURL *itemURL in enumerator) {
         if ([supportedExtensions containsObject:itemURL.pathExtension]) {
-            NSError *error;
-            NSString *contents = [NSString stringWithContentsOfURL:itemURL encoding:NSUTF8StringEncoding error:&error];
-            if (contents) {
-                totalCount += [contents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]].count;
-            } else {
-                NSLog(@"Failed to get file contentsat: %@, %@", itemURL, error);
+            @autoreleasepool {   
+                NSError *error;
+                NSFileHandle *handle = [NSFileHandle fileHandleForReadingFromURL:itemURL error:&error];
+                NSData *data = [handle readDataToEndOfFileAndReturnError:&error];
+                NSString *contents = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                
+                if (contents) {
+                    totalCount += [contents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]].count;
+                } else {
+                    NSLog(@"Failed to get file contentsat: %@, %@", itemURL, error);
+                }
+                
+                [handle closeFile];
             }
         }
     }
@@ -210,7 +218,8 @@
 
     NSFileHandle *readHandle = [pipe fileHandleForReading];
     NSString *output = [[[NSString alloc] initWithData:[readHandle readDataToEndOfFile] encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+    [readHandle closeAndReturnError:nil];
+    
     return [NSDate dateWithTimeIntervalSince1970:output.doubleValue];;
 }
 
