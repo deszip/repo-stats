@@ -18,32 +18,45 @@ extension FocusedValues {
     }
 }
 
+
 struct ContentView: View {
-    
-    @Binding var repos: [Repo]
+    var store: RepoStorage
     var saveAction: (Repo) -> Void
-    var removeAction: (Repo) -> Void
+    var removeAction: (UUID) -> Void
+    var loadAction: (UUID) -> Void
+    var dropAction: (UUID) -> Void
     
-    @State var selectedRepo: Repo?
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \STRepo.name, ascending: true)],
+        animation: .default)
+    private var repos: FetchedResults<STRepo>
+
+    @State var selectedRepos = Set<STRepo>()
     @State private var showingModal = false
     @State private var showingAlert = false
-    
-    var selectedRepoIndex: Int {
-        repos.firstIndex(where: { $0.id == selectedRepo?.id }) ?? repos.startIndex
-    }
-    
+        
     var body: some View {
         NavigationView {
-            List(selection: $selectedRepo) {
-                ForEach(repos) { repo in
-                    NavigationLink(destination: RepoDetail(repo: repo)) {
-                        RepoRow(repo: repo)
-                    }.contextMenu {
-                        Button(action: {
-                            self.showingAlert = true
-                        }) {
-                            Text("Remove repo")
-                        }
+            List(repos, id: \.self, selection: $selectedRepos) { repo in
+                NavigationLink(destination: RepoDetail(repo: repo)) {
+                    RepoRow(repo: repo)
+                }.contextMenu {
+                    Button(action: {
+                        self.showingAlert = true
+                    }) {
+                        Text("Remove repo")
+                    }
+                    Button(action: {
+                        selectedRepos.first?.repoID.flatMap { loadAction($0) }
+                    }) {
+                        Text("Load samples")
+                    }
+                    Button(action: {
+                        selectedRepos.first?.repoID.flatMap { dropAction($0) }
+                    }) {
+                        Text("Drop samples")
                     }
                 }
             }
@@ -51,37 +64,34 @@ struct ContentView: View {
             .navigationTitle("Repos")
             .navigationViewStyle(DoubleColumnNavigationViewStyle())
             .frame(minWidth: 180, idealWidth: 200, maxWidth: 300)
-            .toolbar {
-                Button(action: {
-                    self.showingModal.toggle()
-                }) {
-                    Text("Add")
-                }.sheet(isPresented: $showingModal) {
-                    AddView(showInput: $showingModal, action: { $0.flatMap { saveAction($0) } })
-                }
-            }
-            
+
             Text("Select a Repo")
         }
         .alert(isPresented: $showingAlert) {
             Alert(
                 title: Text("Are you sure?"),
-                message: Text("Do you want to remove the \(selectedRepo?.name ?? "") repo?"),
+                message: Text("Do you want to remove the \(selectedRepos.count) repo?"),
                 primaryButton: .default(Text("OK"), action: {
-                    selectedRepo.flatMap { removeAction($0) }
+                    selectedRepos.first?.repoID.flatMap { removeAction($0) }
                 }),
                 secondaryButton: .cancel()
             )
+        }.toolbar {
+            Button(action: {
+                self.showingModal.toggle()
+            }) {
+                Text("Add")
+            }.sheet(isPresented: $showingModal) {
+                AddView(showInput: $showingModal, action: {
+                    $0.flatMap { saveAction($0) }
+                })
+            }
         }
-        .focusedValue(\.selectedRepo, $repos[selectedRepoIndex])
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(repos: .constant([Repo(name: "Foo repo",
-                                           path: URL(string:"http://github.com/foo/foo")!,
-                                           imageName: "")]),
-                    saveAction: {_ in }, removeAction: { _ in })
+        ContentView(store: RepoStorage(), saveAction: {_ in }, removeAction: { _ in }, loadAction: { _ in }, dropAction: { _ in })
     }
 }

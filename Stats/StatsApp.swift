@@ -9,18 +9,23 @@ import SwiftUI
 
 @main
 struct StatsApp: App {
-    
     @ObservedObject private var storage = RepoStorage()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(repos: $storage.repos,
-                        saveAction: { storage.add($0)},
-                        removeAction: { storage.remove($0) }
+            ContentView(store: storage,
+                        saveAction: { storage.add($0) },
+                        removeAction: { storage.remove($0) },
+                        loadAction: { storage.addSamples(repoID: $0) },
+                        dropAction: { storage.dropSamples(repoID: $0) }
             )
             .frame(minWidth: 700, minHeight: 300)
-            .onAppear { storage.load() }
         }
         .commands { SidebarCommands() }
+        .environment(\.managedObjectContext, storage.viewContext)
+    }
+
+    init() {
+        
     }
 }
