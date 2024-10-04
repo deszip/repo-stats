@@ -11,6 +11,7 @@ struct Repo: Identifiable, Hashable, Equatable {
     var id: UUID = UUID()
     let name: String
     let path: URL?
+    let localPath: URL?
     let branch: String
     let imageName: String
     let samplesCount: Int
@@ -45,5 +46,6 @@ extension Repo {
         self.branch = repo.branch ?? ""
         self.imageName = repo.imageURL ?? ""
         self.samplesCount = repo.samples?.count ?? 0
+        self.localPath = URL(string: repo.localPath ?? "")
     }
 }

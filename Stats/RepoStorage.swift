@@ -68,7 +68,7 @@ class RepoStorage: ObservableObject {
             }
 
             let request = STRepo.fetchRequest()
-            request.predicate = NSPredicate(format: "path = \"\(repoPath)\"")
+            request.predicate = NSPredicate(format: "path = %@", repoPath)
             do {
                 let repos = try self.workingContext.fetch(request)
                 if repos.isEmpty {
@@ -90,12 +90,14 @@ class RepoStorage: ObservableObject {
     func remove(_ repoID: UUID) {
         workingContext.perform {
             let request = STRepo.fetchRequest()
-            request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
+            request.predicate = NSPredicate(format: "repoID = %@", repoID.uuidString)
             do {
                 let repos = try self.workingContext.fetch(request)
                 if let repo = repos.first {
                     self.workingContext.delete(repo)
                     self.save()
+                } else {
+                    print("Storage failed to gt repo with ID: \(repoID)")
                 }
             } catch {
                 fatalError("Failed to fetch repo: \(error)")
@@ -103,31 +105,30 @@ class RepoStorage: ObservableObject {
         }
     }
 
-    func addSamples(repoID: UUID) {
+    func run(repoID: UUID) {
         workingContext.perform {
             let request = STRepo.fetchRequest()
-            request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
+            request.predicate = NSPredicate(format: "repoID = %@", repoID.uuidString)
             do {
                 let repos = try self.workingContext.fetch(request)
                 if let repo = repos.first, let repoPath = repo.path, let repoBranch = repo.branch {
-                    let tempDirectoryURL = FileManager.default.temporaryDirectory
-                        let newDirectoryName = UUID().uuidString // Unique directory name
-                        let newDirectoryURL = tempDirectoryURL.appendingPathComponent(newDirectoryName)
 
-                        do {
-                            try FileManager.default.createDirectory(at: newDirectoryURL, withIntermediateDirectories: true, attributes: nil)
-                        } catch {
-                            print("Failed to create directory: \(error)")
-                        }
-                    
-                    print("Working dir: \(newDirectoryURL)")
-                    
-                    let gitToolkit = STGitToolkit(workingDirectory: newDirectoryURL)
+                    let workingDirectoryURL = self.workingPath(repo)
+
+                    // init toolkit with repo dir
+                    let gitToolkit = STGitToolkit(workingDirectory: workingDirectoryURL)
+
+                    return
+
+                    // could be a already loaded dir, add option to force clone
                     gitToolkit.cloneRepo(repoPath, branch: repoBranch)
-                    
+
+                    // get full commits list
                     let commitHashes = gitToolkit.listCommits()
                     print("Commits: \(commitHashes.count)")
 
+                    // iterate all commits, get stats, save to repo
+                    // - if repo has stats already try to find last one and start from it
                     var previousCommit: STCommit?
                     for (idx, commitHash) in commitHashes.enumerated().reversed() {
                         let commit = gitToolkit.getStats(commitHash)
@@ -160,7 +161,7 @@ class RepoStorage: ObservableObject {
     func dropSamples(repoID: UUID) {
         workingContext.perform {
             let request = STRepo.fetchRequest()
-            request.predicate = NSPredicate(format: "repoID = \"\(repoID)\"")
+            request.predicate = NSPredicate(format: "repoID = %@", repoID.uuidString)
             do {
                 let repos = try self.workingContext.fetch(request)
                 if let repo = repos.first {
@@ -171,6 +172,31 @@ class RepoStorage: ObservableObject {
                 fatalError("Failed to fetch repo: \(error)")
             }
         }
+    }
+
+    private func workingPath(_ repo: STRepo) -> URL {
+        if let localPath = repo.localPath {
+            var isDir: ObjCBool = false
+            let directoryExists = FileManager.default.fileExists(atPath: localPath, isDirectory: &isDir)
+            if directoryExists && isDir.boolValue {
+                let workingURL = URL(fileURLWithPath: localPath)
+                return workingURL
+            }
+        }
+
+        let tempDirectoryURL = FileManager.default.temporaryDirectory
+        let newDirectoryName = UUID().uuidString // Unique directory name
+        let newDirectoryURL = tempDirectoryURL.appendingPathComponent(newDirectoryName)
+
+        do {
+            try FileManager.default.createDirectory(at: newDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("Failed to create directory: \(error)")
+        }
+
+        print("Working dir: \(newDirectoryURL)")
+
+        return newDirectoryURL
     }
 
     private func save() {

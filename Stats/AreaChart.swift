@@ -136,7 +136,7 @@ struct AreaChart: View {
 
     private func dayOfTheWeek(date: Date) -> Int {
         let day = (Calendar.current.dateComponents([.weekday], from: date).weekday ?? 1) - 1
-        print("Day: \(day)")
+//        print("Day: \(day)")
         return day
     }
 
@@ -151,7 +151,7 @@ struct AreaChart: View {
 
         let daysApart = Calendar.current.dateComponents([.day], from: firstDate ?? Date(), to: date).day ?? 0
         
-        print("Week: \(daysApart / 7)")
+//        print("Week: \(daysApart / 7)")
 
         return daysApart / 7
     }
